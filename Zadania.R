@@ -1,8 +1,20 @@
 # Zadanie 2
 V1 <- 120
+S1 <- 1
 V2 <- 90
+S2 <- 1
+
+t1 <- s1/V1
+t1 <- s2/V2
+
+V <- (S1 + S2)/(t1 + t2) 
+
 V <- c(V1, V2)
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! to przerobić
 print(paste("Średnia prędkość pociągu to:", mean(V), "km/h"))
+
+
+
 
 #Zadanie 3: Utwórz funkcję obliczającą współczynnik korelacji r Pearsona dla 
 #2 wektorów o tej samej długości.Wczytaj dane plik dane.csv i oblicz 
@@ -33,15 +45,44 @@ pearsonFunction(dane['waga'], dane['wzrost'])
 #( tyle wierszy ile podaliśmy w argumencie ile. ile=1 oznacza, że gdy użytkownik nie poda żadnej wartości 
 #jako parametr, domyślna wartością będzie 1)
 
+#Najpierw pobieramy liczbę kolumn, a potem podajemy wartosci wierszami!!!!
 
-xx <- scan(n=5)
 
 
 class(xx)
 stworzDataFrame <- function(n=1){
-  x <- scan(n=n)
+ 
 }
 
 
+
+
+
+#5 Napisz funkcję , która pobiera sciezkeKatalogu, nazweKolumny, jakaFunkcje, DlaIluPlikow i liczy: 
+#mean, median,min,max w zależności od podanej nazwy funkcji w argumencie, z katologu który podaliśmy i z tylu plików ilu podaliśmy dla wybranej nazwy kolumny. 
+# UWAGA: w podanych plikach R pobierając komórki nazwane liczbami R wstawi przed nazwy X. Funkcję przetestuj dla katalogu smogKrakow.zip.  Wykonując obliczenia pomiń brakujące wartości.
+
+# liczZplikow <- function(sciezka,nazwaKolumny,jakaFunkcja="mean",DlaIluPlikow=1){ 
+#   
+#   #...
+#   
+# }
+# 
+# Lista plików w katalogu: 
+#   
+#   list.files(sciezka)
+# 
+# Omijanie na : na.omit(myDataFrame[[nazwaKolumny]])
+# Do złączania stringów: 
+#   
+#   paste("string1","string2",sep="TU WSTAW SEPARATOR")
+# Gdy mamy, rózne oznaczenia NA w plikach możemy wykorzystać ( w tym wypadku pusty znak i NA: na.strings=c("","NA")
+
+
+dttest <- readcsv("./smogKrakow2/0012017.csv")
+mean(dttest$x3_pressure,na.rm=TRUE)
+
+# Pamietac o tym, ze wybieramy, z ilu plików zczytujemy
+#funkcjonuja komendy break, next w pętlach for, while
 
 
