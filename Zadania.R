@@ -19,6 +19,7 @@ b <- c(2, 5, 6, 1, 9)
 pearsonFunction(a, b)
 
 dane <- read.csv('dane.csv', sep = ";")
+#może byc też read.csv2('dane.csv')
 
 pearsonFunction(dane['waga'], dane['wzrost'])
 
@@ -31,3 +32,16 @@ pearsonFunction(dane['waga'], dane['wzrost'])
 #W pierwszym wierszu użytkownik podaje nazwy kolumn. w kolejnych wierszach zawartość wierszy ramki danych 
 #( tyle wierszy ile podaliśmy w argumencie ile. ile=1 oznacza, że gdy użytkownik nie poda żadnej wartości 
 #jako parametr, domyślna wartością będzie 1)
+
+
+xx <- scan(n=5)
+
+
+class(xx)
+stworzDataFrame <- function(n=1){
+  x <- scan(n=n)
+}
+
+
+
+

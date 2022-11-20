@@ -123,4 +123,50 @@ df[2,2]
 df[2,'imie']
 df[2,]
 
+df1row <- data.frame(numer=4, imie="michal", plec="m")
+df <- rbind(df, df1row)
 
+df$numer # ważne! To wypisanie elementów danej kolumny
+
+length(df$numer)
+length(df)
+ncol(df)
+liczbaWierszy <- nrow(df)
+
+for(i in 1:liczbaWierszy){
+  if(df[i,'imie'] != "arek")
+    print(df[i,])
+}
+
+
+
+podajImie <- function(a){
+  print(paste("witaj",a, sep=" "))
+  print(paste0("witaj ",a))
+}
+
+podajImie(5)
+
+
+podajImie2 <- function(a="user"){
+  print(paste("witaj",a, sep=" "))
+  print(paste0("witaj ",a))
+}
+
+podajImie2()
+podajImie2("Filip")
+
+
+podajImie3 <- function(sep=","){
+  line <- readline(prompt = "podaj swoje imie i nazwisko oddzielone przecinkiem: ")
+  podzielone <- strsplit(line,sep)
+  print(podzielone)
+  
+  print(paste0("imie: ", podzielone[[1]] [1]))
+  print(paste0("nazwisko: ", podzielone[[1]] [2]))
+}
+
+
+podajImie3()
+
+line
