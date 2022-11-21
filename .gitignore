@@ -4,10 +4,12 @@
 
 # Session Data files
 .RData
-data.csv
 
 # User-specific files
 .Ruserdata
+data.csv
+smogKrakow2
+smogKrakow2.zip
 
 # Example code in package build process
 *-Ex.R

@@ -114,3 +114,14 @@ mean(dttest$x3_pressure,na.rm=TRUE)
 #funkcjonuja komendy break, next w pętlach for, while
 
 
+
+
+
+
+
+
+
+list.files(path = "smogKrakow2")
+
+
+unzip(zipfile = "smogKrakow2.zip", list = TRUE)
