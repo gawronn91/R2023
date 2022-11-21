@@ -1,19 +1,15 @@
-# Zadanie 2
+# Zadanie 2 Pociąg z Lublina do Warszawy przejechał połowę drogi ze średnią prędkością 120 km/h.
+
+#Drugą połowę przejechał ze średnią prędkością 90 km/h.
+
+#Jaka była średnia prędkość pociągu.
 V1 <- 120
-S1 <- 1
 V2 <- 90
-S2 <- 1
 
-t1 <- s1/V1
-t1 <- s2/V2
-
-V <- (S1 + S2)/(t1 + t2) 
-
-V <- c(V1, V2)
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! to przerobić
-print(paste("Średnia prędkość pociągu to:", mean(V), "km/h"))
+V <- 2*V1*V2/(V1+V2)
 
 
+print(paste("Średnia prędkość pociągu to:", V, "km/h"))
 
 
 #Zadanie 3: Utwórz funkcję obliczającą współczynnik korelacji r Pearsona dla 
@@ -48,13 +44,45 @@ pearsonFunction(dane['waga'], dane['wzrost'])
 #Najpierw pobieramy liczbę kolumn, a potem podajemy wartosci wierszami!!!!
 
 
-
-class(xx)
-stworzDataFrame <- function(n=1){
- 
+stworzDataFrame <- function(n_rows=1, sep=","){
+  
+  #Wczytanie liczby wierszy
+  n <- readline(prompt = "podaj liczbe wierszy: ")
+  
+  # Jeśli nie zostanie wybrana liczba wierszy, będzie to liczba docelowa
+  if (n!=""){
+    n_rows <- n
+  }
+  
+  # Podanie nazw kolumn
+  enter_column_names <- readline(prompt = paste("podaj nazwy kolumn oddzielone znakiem", sep, ": "))
+  column_names <- strsplit(enter_column_names, sep)[[1]]
+  
+  # Deklaracja pustej ramki danych
+  df <- data.frame(matrix(ncol = length(column_names), nrow = 0))
+  
+  # Wpisywanie elementów do poszczególnych wierszy przy pomocy funkcji insertRow
+  for(i in 1:n_rows){
+    elements = insertRow(length(column_names), sep)
+    df = rbind(df, elements)
+  }
+  colnames(df) <- column_names
+  
+  df
+}
+insertRow <- function(n, sep){
+  while(TRUE){
+    row <- readline(prompt = paste("Podaj elementy wiersza oddzielone znakiem", sep, ": "))
+    elements <- strsplit(row, sep)[[1]]
+    
+    if(length(elements)==n){
+      return(elements)
+    }
+    print(paste("Nieprawidłowa ilosć elementów wiersza! Wpisz", n, "elementów"))
+  }
 }
 
-
+stworzDataFrame(n_rows=2)
 
 
 
