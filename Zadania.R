@@ -1,8 +1,7 @@
-# Zadanie 2 Pociąg z Lublina do Warszawy przejechał połowę drogi ze średnią prędkością 120 km/h.
+#################################### Zadanie 1 ##################################################################
+# Zadanie wykonane, bo przesałane za pomocą githuba
 
-#Drugą połowę przejechał ze średnią prędkością 90 km/h.
-
-#Jaka była średnia prędkość pociągu.
+#################################### Zadanie 2 ##################################################################
 V1 <- 120
 V2 <- 90
 
@@ -12,38 +11,80 @@ V <- 2*V1*V2/(V1+V2)
 print(paste("Średnia prędkość pociągu to:", V, "km/h"))
 
 
-#Zadanie 3: Utwórz funkcję obliczającą współczynnik korelacji r Pearsona dla 
-#2 wektorów o tej samej długości.Wczytaj dane plik dane.csv i oblicz 
-#współczynnik dla wagi i wzrostu. W komentarzu napisz co oznacza wynik.
+#################################### Zadanie 3 ##################################################################
 
+#Funkcja pomocnicza - do porównania wyników
 pearsonFunction <- function(a, b){
   pearsonFactor <- cor(a, b, method = "pearson")
   print(paste("Współczynnik korelacji Pearsona dla podanych wektorów to:", pearsonFactor))
 }
 
+#Funkcja właściwa
+pearsonFunction2 <- function(a, b){
+  if (length(a)!=length(b)){
+    return("Wektory mają różne rozmiary")
+  }
+  
+  licz_r <- 0
+  mian_x_r <- 0
+  mian_y_r <- 0
+  for(i in 1:length(a)){
+    
+    x_dif <- a[i]-mean(a)
+    y_dif <- b[i]-mean(b)
+    
+    licz_r_temp <- x_dif*y_dif
+    licz_r <- licz_r + licz_r_temp
+    
+    mian_x_r_temp <- x_dif^2
+    mian_y_r_temp <- y_dif^2
+    
+    mian_x_r <- mian_x_r_temp + mian_x_r
+    mian_y_r <- mian_y_r_temp + mian_y_r
+    
+  }
+  
+  return(licz_r/sqrt(mian_x_r * mian_y_r))
+}
+
+#Deklaracja wektorów
 a <- c(2, 5, 8, 2, 7)
-b <- c(2, 5, 6, 1, 9)
+b <- c(2, 4, 8, 2, 1)
 
+# Wywołanie funkcji
 pearsonFunction(a, b)
+pearsonFunction2(a, b)
 
+print(paste("Współczynnik korelacji Pearsona dla podanych wektorów to:", pearsonFunction2(a, b)))
+
+
+# Pobranie danych
 dane <- read.csv('dane.csv', sep = ";")
-#może byc też read.csv2('dane.csv')
 
-pearsonFunction(dane['waga'], dane['wzrost'])
+
+# Wynik
+print(paste("Współczynnik korelacji Pearsona dla podanych wektorów to:", pearsonFunction2(dane[['waga']], dane[['wzrost']])))
 
 #Współczynnik korelacji jest bliski 1, co oznacza, ze waga oraz wzrost są ze sobą pozytywnie skorelowane
 #Można założyć, że dla dostarczonych danych waga rośnie wraz ze wzrostem
 
 
-#4. Napisz funkcję zwracającą ramke danych z danych podanych przez użytkownika
-#stworzDataFrame <- function(ile=1)
-#W pierwszym wierszu użytkownik podaje nazwy kolumn. w kolejnych wierszach zawartość wierszy ramki danych 
-#( tyle wierszy ile podaliśmy w argumencie ile. ile=1 oznacza, że gdy użytkownik nie poda żadnej wartości 
-#jako parametr, domyślna wartością będzie 1)
+#################################### Zadanie 4 ##################################################################
 
-#Najpierw pobieramy liczbę kolumn, a potem podajemy wartosci wierszami!!!!
+# Funkcja pomocnicza
+insertRow <- function(n, sep){
+  while(TRUE){
+    row <- readline(prompt = paste("Podaj elementy wiersza oddzielone znakiem", sep, ": "))
+    elements <- strsplit(row, sep)[[1]]
+    
+    if(length(elements)==n){
+      return(elements)
+    }
+    print(paste("Nieprawidłowa ilosć elementów wiersza! Wpisz", n, "elementów"))
+  }
+}
 
-
+#Funkcja właściwa
 stworzDataFrame <- function(n_rows=1, sep=","){
   
   #Wczytanie liczby wierszy
@@ -70,58 +111,67 @@ stworzDataFrame <- function(n_rows=1, sep=","){
   
   df
 }
-insertRow <- function(n, sep){
-  while(TRUE){
-    row <- readline(prompt = paste("Podaj elementy wiersza oddzielone znakiem", sep, ": "))
-    elements <- strsplit(row, sep)[[1]]
-    
-    if(length(elements)==n){
-      return(elements)
-    }
-    print(paste("Nieprawidłowa ilosć elementów wiersza! Wpisz", n, "elementów"))
-  }
-}
 
+#Wywołanie funkcji
 stworzDataFrame(n_rows=2)
 
 
+#################################### Zadanie 5 ##################################################################
 
-#5 Napisz funkcję , która pobiera sciezkeKatalogu, nazweKolumny, jakaFunkcje, DlaIluPlikow i liczy: 
-#mean, median,min,max w zależności od podanej nazwy funkcji w argumencie, z katologu który podaliśmy i z tylu plików ilu podaliśmy dla wybranej nazwy kolumny. 
-# UWAGA: w podanych plikach R pobierając komórki nazwane liczbami R wstawi przed nazwy X. Funkcję przetestuj dla katalogu smogKrakow.zip.  Wykonując obliczenia pomiń brakujące wartości.
+# Funkcja pomocnicza
+f_type <- function(funkcja="mean", df, nazwaKolumny){
+  if (funkcja=="mean"){
+    return(mean(df[[nazwaKolumny]], na.rm = TRUE))
+  }else if (funkcja=="max"){
+    return(max(df[[nazwaKolumny]], na.rm = TRUE))
+  }else if (funkcja=="median"){
+    return(median(df[[nazwaKolumny]], na.rm = TRUE))
+  }else if (funkcja=="min"){
+    return(min(df[[nazwaKolumny]], na.rm = TRUE))
+  }else{
+    return("Niepoprawna nazwa funkcji")
+  }
+}
 
-# liczZplikow <- function(sciezka,nazwaKolumny,jakaFunkcja="mean",DlaIluPlikow=1){ 
-#   
-#   #...
-#   
-# }
-# 
-# Lista plików w katalogu: 
-#   
-#   list.files(sciezka)
-# 
-# Omijanie na : na.omit(myDataFrame[[nazwaKolumny]])
-# Do złączania stringów: 
-#   
-#   paste("string1","string2",sep="TU WSTAW SEPARATOR")
-# Gdy mamy, rózne oznaczenia NA w plikach możemy wykorzystać ( w tym wypadku pusty znak i NA: na.strings=c("","NA")
+#Funkcja właściwa
+liczZplikow <- function(sciezka="smogKrakow2/",nazwaKolumny="263_temperature",jakaFunkcja="mean",DlaIluPlikow=1){ 
+  
+  #Określenie listy plików oraz sprawdzenie poprawności ścieżki
+  files_list <- list.files(path = sciezka, pattern="*.csv")
+  if (length(files_list)==0){
+    return("Nieprawidłowa ścieżka pliku")
+  }
+  
+  # Funkcja for przeglądająca pliki i łącząca je w 1 dataframe
+  for(i in 1:length(files_list)){
+    file_name <-paste(sciezka, files_list[i], sep="")
+    df_temp <- read.csv(file_name, sep=",")
+    colnames(df_temp) <- sub("^X", "", colnames(df_temp))
+    if(i==1){
+      df <- data.frame(matrix(ncol = length(colnames(df_temp)), nrow = 0))
+      colnames(df) <- colnames(df_temp)
+    }
+    
+    df <- rbind(df, df_temp)
+    
+    # Funkcja for przerywana, gdy dataframe składa się z wymaganej liczby plików
+    if (i==DlaIluPlikow){
+      break;
+    }
+  }
+  # Sprawdzenie poprawności nazwy kolumny
+  if (!(nazwaKolumny %in% colnames(df))){
+    return("Nieprawidłowa nazwa kolumny")
+  }
+  
+  # Funkcja odpowiedzialna za drukowanie wyników w zależności od tego, co chcemy wyliczyć
+  return(f_type(jakaFunkcja, df, nazwaKolumny))
+}
 
 
-dttest <- readcsv("./smogKrakow2/0012017.csv")
-mean(dttest$x3_pressure,na.rm=TRUE)
 
-# Pamietac o tym, ze wybieramy, z ilu plików zczytujemy
-#funkcjonuja komendy break, next w pętlach for, while
+#Wywołanie funkcji
+liczZplikow(sciezka="smogKrakow2/",jakaFunkcja="mean", nazwaKolumny = "263_temperature", DlaIluPlikow=4)
+liczZplikow(jakaFunkcja="max", DlaIluPlikow=10)
+liczZplikow()
 
-
-
-
-
-
-
-
-
-list.files(path = "smogKrakow2")
-
-
-unzip(zipfile = "smogKrakow2.zip", list = TRUE)
